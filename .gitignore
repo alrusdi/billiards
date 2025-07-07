@@ -57,3 +57,6 @@ node_modules/
 
 # next.js build output
 .next
+
+/dist/models/*.min.gltf
+/dist/models/*.min.bin
