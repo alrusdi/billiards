@@ -31,30 +31,30 @@ export class Rack {
   }
 
   static cueBall(pos) {
-    return new Ball(Rack.jitter(pos), 0xfaebd7)
+    return new Ball(Rack.jitter(pos), 0xfaebd7, 'white')
   }
 
   static diamond() {
     const pos = new Vector3(TableGeometry.tableX / 2, 0, 0)
     const diamond: Ball[] = []
     diamond.push(Rack.cueBall(Rack.spot))
-    diamond.push(new Ball(Rack.jitter(pos), 0xe0de36))
+    diamond.push(new Ball(Rack.jitter(pos), 0xe0de36, 'yellow'))
     pos.add(Rack.diagonal)
-    diamond.push(new Ball(Rack.jitter(pos), 0xff9d00))
+    diamond.push(new Ball(Rack.jitter(pos), 0xff9d00, 'blue'))
     pos.sub(Rack.across)
-    diamond.push(new Ball(Rack.jitter(pos), 0x521911))
+    diamond.push(new Ball(Rack.jitter(pos), 0x521911, 'red'))
     pos.add(Rack.diagonal)
-    diamond.push(new Ball(Rack.jitter(pos), 0x595200))
+    diamond.push(new Ball(Rack.jitter(pos), 0x595200, 'purple'))
     pos.sub(Rack.across)
-    diamond.push(new Ball(Rack.jitter(pos), 0xff0000))
+    diamond.push(new Ball(Rack.jitter(pos), 0xff0000, 'green'))
     pos.addScaledVector(Rack.across, 2)
-    diamond.push(new Ball(Rack.jitter(pos), 0x050505))
+    diamond.push(new Ball(Rack.jitter(pos), 0x050505, 'orange'))
     pos.add(Rack.diagonal).sub(Rack.across)
-    diamond.push(new Ball(Rack.jitter(pos), 0x0a74c2))
+    diamond.push(new Ball(Rack.jitter(pos), 0x0a74c2, 'pink'))
     pos.sub(Rack.across)
-    diamond.push(new Ball(Rack.jitter(pos), 0x087300))
+    diamond.push(new Ball(Rack.jitter(pos), 0x087300, 'black'))
     pos.add(Rack.diagonal)
-    diamond.push(new Ball(Rack.jitter(pos), 0x3e009c))
+    diamond.push(new Ball(Rack.jitter(pos), 0x3e009c, 'yellow-stripes'))
     return diamond
   }
 

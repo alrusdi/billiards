@@ -34,13 +34,14 @@ export class Camera {
   aimView(aim: AimEvent, fraction = 0.08) {
     const h = this.height
     const portrait = this.camera.aspect < 0.8
+    const distanceFromCueBall = 28
     this.camera.fov = portrait ? 60 : 40
     if (h < 10 * R) {
       const factor = 100 * (10 * R - h)
       this.camera.fov -= factor * (portrait ? 3 : 1)
     }
     this.camera.position.lerp(
-      aim.pos.clone().addScaledVector(unitAtAngle(aim.angle), -R * 18),
+      aim.pos.clone().addScaledVector(unitAtAngle(aim.angle), -R * distanceFromCueBall),
       fraction
     )
     this.camera.position.z = h

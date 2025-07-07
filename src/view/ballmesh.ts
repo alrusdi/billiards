@@ -2,18 +2,31 @@ import {
   IcosahedronGeometry,
   Matrix4,
   Mesh,
-  MeshPhongMaterial,
   CircleGeometry,
   MeshBasicMaterial,
+  MeshStandardMaterial,
   ArrowHelper,
   Color,
   BufferAttribute,
   Vector3,
+  TextureLoader
 } from "three"
 import { State } from "../model/ball"
 import { norm, up, zero } from "./../utils/utils"
 import { R } from "../model/physics/constants"
 import { Trace } from "./trace"
+
+const texturesMap = {
+  'white': 'cue',
+  'yellow': '1',
+  'blue': '2',
+  'red': '3',
+  'purple': '4',
+  'orange': '5',
+  'pink': '6',
+  'black': '7',
+  'yellow-stripes': '9'
+}
 
 export class BallMesh {
   mesh: Mesh
@@ -21,8 +34,10 @@ export class BallMesh {
   spinAxisArrow: ArrowHelper
   trace: Trace
   color: Color
-  constructor(color) {
+  name: string = "unknown"
+  constructor(color, name?) {
     this.color = new Color(color)
+    if (name) this.name = name
     this.initialiseMesh(color)
   }
 
@@ -59,25 +74,32 @@ export class BallMesh {
   }
 
   initialiseMesh(color) {
-    const geometry = new IcosahedronGeometry(R, 1)
-    const material = new MeshPhongMaterial({
-      emissive: 0,
-      flatShading: true,
+    const props = {
+      color: color,
+      roughness: 0.37,
+      metalness: 0,
+      flatShading: false,
       vertexColors: true,
-      forceSinglePass: true,
-      shininess: 25,
-      specular: 0x555533,
-    })
-    this.addDots(geometry, color)
+      forceSinglePass: false,
+    }
+    if (this.name !== "unknown") {
+      props.map = new TextureLoader().load(
+        `images/pool/${texturesMap[this.name]}.png`
+      )
+      props.color = new Color(0xffffff)
+    }
+    const geometry = new IcosahedronGeometry(R, 5)
+    const material = new MeshStandardMaterial(props)
+    this.addDots(geometry, props.color)
     this.mesh = new Mesh(geometry, material)
     this.mesh.name = "ball"
     this.updateRotation(new Vector3().random(), 100)
 
-    const shadowGeometry = new CircleGeometry(R * 0.9, 9)
+    const shadowGeometry = new CircleGeometry(R * 0.65, 29)
     shadowGeometry.applyMatrix4(
-      new Matrix4().identity().makeTranslation(0, 0, -R * 0.99)
+      new Matrix4().identity().makeTranslation(0, 0, -R * 0.9)
     )
-    const shadowMaterial = new MeshBasicMaterial({ color: 0x111122 })
+    const shadowMaterial = new MeshBasicMaterial({ color: 0x111122, transparent: true, opacity: 0.75 })
     this.shadow = new Mesh(shadowGeometry, shadowMaterial)
     this.spinAxisArrow = new ArrowHelper(up, zero, 2, 0x000000, 0.01, 0.01)
     this.spinAxisArrow.visible = false
@@ -87,7 +109,6 @@ export class BallMesh {
   addDots(geometry, baseColor) {
     const count = geometry.attributes.position.count
     const color = new Color(baseColor)
-    const red = new Color(0xaa2222)
 
     geometry.setAttribute(
       "color",
@@ -104,11 +125,6 @@ export class BallMesh {
         this.scaleNoise(color.b)
       )
     }
-
-    const dots = [0, 96, 111, 156, 186, 195]
-    dots.forEach((i) => {
-      this.colorVerticesForFace(i / 3, verticies, red.r, red.g, red.b)
-    })
   }
 
   addToScene(scene) {

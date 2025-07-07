@@ -23,6 +23,8 @@ export class Ball {
   readonly rvel: Vector3 = zero.clone()
   readonly futurePos: Vector3 = zero.clone()
   readonly ballmesh: BallMesh
+  name: string = "unknown"
+  group: string = "any"
   state: State = State.Stationary
   pocket: Pocket
 
@@ -31,9 +33,11 @@ export class Ball {
 
   static readonly transition = 0.05
 
-  constructor(pos, color?) {
+  constructor(pos, color?, name?, group?) {
+    if (name) this.name = name
+    if (group) this.group = group
     this.pos = pos.clone()
-    this.ballmesh = new BallMesh(color || 0xeeeeee * Math.random())
+    this.ballmesh = new BallMesh(color || 0xeeeeee * Math.random(), name)
   }
 
   update(t) {

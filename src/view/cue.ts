@@ -151,7 +151,7 @@ export class Cue {
   }
 
   showHelper(b) {
-    this.helperMesh.visible = b
+    this.helperMesh.visible = false
   }
 
   toggleHelper() {

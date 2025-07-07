@@ -55,7 +55,7 @@ export abstract class ControllerBase extends Controller {
         cue.toggleHelper()
         return true
       case "movementXUp":
-        cue.rotateAim(delta * 2, this.container.table)
+        cue.rotateAim(-delta * 2, this.container.table)
         return true
       case "movementYUp":
       case "NumpadSubtract":
