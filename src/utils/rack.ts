@@ -50,7 +50,7 @@ export class Rack {
     pos.addScaledVector(Rack.across, 2)
     diamond.push(new Ball(Rack.jitter(pos), 0x050505, 'orange'))
     pos.add(Rack.diagonal).sub(Rack.across)
-    diamond.push(new Ball(Rack.jitter(pos), 0x0a74c2, 'pink'))
+    diamond.push(new Ball(Rack.jitter(pos), 0x0a74c2, 'maroon'))
     pos.sub(Rack.across)
     diamond.push(new Ball(Rack.jitter(pos), 0x087300, 'black'))
     pos.add(Rack.diagonal)
