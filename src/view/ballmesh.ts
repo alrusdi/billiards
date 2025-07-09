@@ -22,9 +22,10 @@ const texturesMap = {
   'blue': '2',
   'red': '3',
   'purple': '4',
-  'orange': '5',
-  'pink': '6',
-  'black': '7',
+  'green': '5',
+  'orange': '6',
+  'maroon': '7',
+  'black': '8',
   'yellow-stripes': '9'
 }
 
